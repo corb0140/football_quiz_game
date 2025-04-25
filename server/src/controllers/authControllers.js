@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const pool = require("../config/db");
 const logger = require("../helpers/logger");
@@ -16,6 +17,7 @@ const register = async (req, res) => {
       [email]
     );
 
+    // 400 means bad request
     if (rows[0].exists)
       return res.status(400).json({ message: "User already exists" });
 
@@ -75,13 +77,13 @@ const login = async (req, res) => {
 
     // check if email exists
     if (!user.email) {
-      return res.status(400).json({ message: "Invalid email" });
+      return res.status(401).json({ message: "Invalid email" });
     }
 
     // Compare passwords
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword)
-      return res.status(400).json({ message: "Invalid password" });
+      return res.status(401).json({ message: "Invalid password" });
 
     // Check if user exists
     if (!user) {
@@ -112,7 +114,75 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    /**
+     * @description Clear the refresh token cookie
+     * res.clearCookie() - This is an express method used to clear a cookie from the user's browser.
+     * "refreshToken" - The name/key of the cookie to be cleared
+     */
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
+
+    res.status(200).json({ message: "User logged out successfully" });
+  } catch (error) {
+    logger.error("Error in logout controller", error);
+    return res.status(500).json({ message: "server error" });
+  }
+};
+
+const refreshToken = (req, res) => {
+  const token = req.cookies.refreshToken;
+
+  // 401 means unauthorized
+  if (!token)
+    return res.status(401).json({ message: "No refresh token provided" });
+
+  try {
+    /**
+     * @description jwt.verify() - This method verifies the token using the secret key.
+     * token - The JWT token to be verified
+     * process.env.REFRESH_TOKEN_SECRET - The secret key used to sign the token.
+     * If the token is valid, it returns the decoded payload.
+     */
+    const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+
+    const user = {
+      id: decoded.id,
+      email: decoded.email,
+    };
+
+    // Generate new access token
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    // Update the refresh token in the cookie
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      message: "Refresh token generated successfully",
+      accessToken,
+    });
+  } catch (error) {
+    logger.error("Error in refresh token controller", error);
+    // 403 means forbidden
+    return res
+      .status(403)
+      .json({ message: "Invalid or expired refresh token" });
+  }
+};
+
 module.exports = {
   register,
   login,
+  logout,
+  refreshToken,
 };

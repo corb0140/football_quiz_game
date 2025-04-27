@@ -6,6 +6,7 @@ const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../helpers/token");
+const generateResetToken = require("../helpers/generateResetToken");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -180,9 +181,46 @@ const refreshToken = (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+
+    const user = rows[0];
+
+    if (!user) {
+      return res.status(404).json({ message: "No user found with that email" });
+    }
+
+    // Generate reset token
+    const { resetToken, hashedToken } = generateResetToken();
+
+    // set expiration time for the token
+    const expirationTime = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    // Save hashed token + expiration time to the database
+    await pool.query(
+      "UPDATE users SET reset_password_token = $1, reset_password_expires = $2 WHERE email = $3",
+      [hashedToken, expirationTime, email]
+    );
+
+    res.status(200).json({
+      message: "Password reset token generated",
+      resetToken, // In production you'd send this by email
+    });
+  } catch (error) {
+    logger.error("Error in forgot password controller", error);
+    return res.status(500).json({ message: "server error" });
+  }
+};
+
 module.exports = {
   register,
   login,
   logout,
   refreshToken,
+  forgotPassword,
 };

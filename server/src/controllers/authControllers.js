@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const pool = require("../config/db");
@@ -82,6 +83,7 @@ const login = async (req, res) => {
     }
 
     // Compare passwords
+    // 401 means unauthorized
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword)
       return res.status(401).json({ message: "Invalid password" });
@@ -138,7 +140,6 @@ const logout = async (req, res) => {
 const refreshToken = (req, res) => {
   const token = req.cookies.refreshToken;
 
-  // 401 means unauthorized
   if (!token)
     return res.status(401).json({ message: "No refresh token provided" });
 
@@ -191,9 +192,9 @@ const forgotPassword = async (req, res) => {
 
     const user = rows[0];
 
-    if (!user) {
+    // 404 means not found
+    if (!user)
       return res.status(404).json({ message: "No user found with that email" });
-    }
 
     // Generate reset token
     const { resetToken, hashedToken } = generateResetToken();
@@ -217,10 +218,59 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  const { resetToken, newPassword } = req.body;
+
+  if (!resetToken || !newPassword)
+    return res
+      .status(400)
+      .json({ message: "Reset token and new password are required" });
+
+  try {
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const { rows } = await pool.query(
+      "SELECT * FROM users WHERE reset_password_token = $1 AND reset_password_expires > NOW()",
+      [hashedToken]
+    );
+
+    const user = rows[0];
+
+    if (!user)
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset token" });
+
+    /**
+     * @description salt - A random string added to the password before hashing to make it more secure.
+     * bcrypt.genSalt() - This method generates a salt with the specified number of rounds (10 in this case).
+     * The higher the number of rounds, the more secure the hash will be, but it will also take longer to compute.
+     * 10 rounds is a good balance between security and performance.
+     */
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the user's password in the database and clear reset fields
+    await pool.query(
+      "UPDATE users SET password = $1, reset_password_token = NULL, reset_password_expires = NULL WHERE id = $2",
+      [hashedPassword, user.id]
+    );
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    logger.error("Error in reset password controller", error);
+    return res.status(500).json({ message: "server error" });
+  }
+};
+
 module.exports = {
   register,
   login,
   logout,
   refreshToken,
   forgotPassword,
+  resetPassword,
 };

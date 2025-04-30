@@ -2,7 +2,7 @@ const { Router } = require("express");
 const authRouter = Router();
 const authController = require("../controllers/authControllers");
 
-authRouter.post("/register", authController.register);
+authRouter.post("/signup", authController.signup);
 authRouter.post("/login", authController.login);
 authRouter.post("/logout", authController.logout);
 authRouter.post("/forgot-password", authController.forgotPassword);

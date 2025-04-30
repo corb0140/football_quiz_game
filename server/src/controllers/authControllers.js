@@ -9,7 +9,7 @@ const {
 } = require("../helpers/token");
 const generateResetToken = require("../helpers/generateResetToken");
 
-const register = async (req, res) => {
+const signup = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -267,7 +267,7 @@ const resetPassword = async (req, res) => {
 };
 
 module.exports = {
-  register,
+  signup,
   login,
   logout,
   refreshToken,

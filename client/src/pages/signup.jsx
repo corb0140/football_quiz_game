@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "../api/axios";
 import { ArrowLeft, Eye, EyeClosed } from "lucide-react";
 import { css, keyframes } from "@emotion/react";
+import { Link } from "react-router-dom";
 
 const loginButtonAnimation = keyframes`
   0% {
@@ -120,7 +121,7 @@ function Signup() {
 
                   <button
                     type="button"
-                    className="mr-2"
+                    className="mr-2 cursor-pointer"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -136,8 +137,8 @@ function Signup() {
             {/* SIGNUP BUTTON */}
             <button
               type="submit"
-              className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded hover:bg-dark-blue/80 
-              transition duration-300 cursor-pointer"
+              className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded hover:text-blue-500
+              transition duration-500 cursor-pointer"
             >
               <p className="uppercase tracking-wider font-roboto-condensed">
                 Signup
@@ -150,8 +151,9 @@ function Signup() {
             80 in any quiz.
           </p>
 
-          <button
-            className="flex items-center gap-4 cursor-pointer"
+          <Link
+            to="/"
+            className="inline-flex w-fit items-center gap-4 cursor-pointer"
             css={css`
               &:hover .arrow {
                 animation: ${loginButtonAnimation} 0.8s infinite alternate;
@@ -160,7 +162,7 @@ function Signup() {
           >
             <ArrowLeft className="h-5 w-5 text-dark-blue arrow" />
             <p>Back to login screen</p>
-          </button>
+          </Link>
         </div>
       </div>
     </div>
@@ -168,13 +170,3 @@ function Signup() {
 }
 
 export default Signup;
-
-// <div className="self-end">
-//   <button
-//     onClick={() => console.log("10")}
-//     type="button"
-//     className="text-sm font-semibold"
-//   >
-//     Forgot Password
-//   </button>
-// </div>;

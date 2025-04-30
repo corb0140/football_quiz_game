@@ -10,13 +10,13 @@ const {
 const generateResetToken = require("../helpers/generateResetToken");
 
 const signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     // Check if user already exists
     const { rows } = await pool.query(
-      "SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)",
-      [email]
+      "SELECT EXISTS (SELECT 1 FROM users WHERE email = $1 OR username = $2)",
+      [email, username]
     );
 
     // 400 means bad request
@@ -28,8 +28,8 @@ const signup = async (req, res) => {
 
     // Insert user into DB
     const newUser = await pool.query(
-      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email",
-      [email, hashedPassword]
+      "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, email",
+      [username, email, hashedPassword]
     );
 
     const user = newUser.rows[0];
@@ -67,19 +67,20 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    // Find user by email
-    const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
+    // Find user by username
+    const { rows } = await pool.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username]
+    );
 
     const user = rows[0];
 
-    // check if email exists
-    if (!user.email) {
-      return res.status(401).json({ message: "Invalid email" });
+    // check if username exists
+    if (!user.username) {
+      return res.status(401).json({ message: "This user does not exit" });
     }
 
     // Compare passwords
@@ -90,7 +91,7 @@ const login = async (req, res) => {
 
     // Check if user exists
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid username or password" });
     }
 
     // Generate tokens

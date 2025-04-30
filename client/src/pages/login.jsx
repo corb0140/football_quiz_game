@@ -1,18 +1,32 @@
 import React, { useState } from "react";
-import axios from "../api/axios";
+// import axios from "../api/axios";
 import { Eye, EyeClosed } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLoginMutation } from "../lib/state/autApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../lib/state/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/login", { username, password });
+      const response = await login({ username, password }).unwrap();
+      dispatch(
+        setCredentials({
+          user: response.user,
+          accessToken: response.accessToken,
+        })
+      );
+      navigate("/dashboard");
       console.log("Login successful:", response.data);
       alert("Login successful");
     } catch (error) {
@@ -115,6 +129,7 @@ function Signup() {
             {/* BUTTONS */}
             <div className="flex gap-5">
               <button
+                disabled={isLoading}
                 type="submit"
                 className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded
                 hover:text-blue-500 transition duration-300 cursor-pointer py-4 px-8 flex items-center"

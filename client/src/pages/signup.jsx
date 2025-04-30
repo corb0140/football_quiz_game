@@ -23,7 +23,11 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/signup", { email, password });
+      const response = await axios.post("/signup", {
+        username,
+        email,
+        password,
+      });
       console.log("Signup successful:", response.data);
       alert("Signup successful");
     } catch (error) {

@@ -3,6 +3,8 @@ import { ArrowLeft, Eye, EyeClosed } from "lucide-react";
 import { css, keyframes } from "@emotion/react";
 import { Link } from "react-router-dom";
 import { useSignupMutation } from "../lib/state/authApi";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../lib/state/authSlice";
 
@@ -16,6 +18,7 @@ const loginButtonAnimation = keyframes`
 `;
 
 function Signup() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [signup, { isLoading }] = useSignupMutation();
   const [username, setUsername] = useState("");
@@ -33,12 +36,15 @@ function Signup() {
         password,
       }).unwrap();
       console.log("Signup successful:", response);
-      dispatch(
-        setCredentials({
-          user: response.user,
-          accessToken: response.accessToken,
-        })
-      );
+
+      const accessToken = Cookies.get("accessToken");
+
+      if (accessToken) {
+        console.log("Access token found in cookies:", accessToken);
+        dispatch(setCredentials({ accessToken }));
+      }
+
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error during signup:", error);
     }

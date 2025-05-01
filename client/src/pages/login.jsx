@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useLoginMutation } from "../lib/state/authApi";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../lib/state/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -11,6 +12,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,6 +26,8 @@ function Login() {
           accessToken: response.accessToken,
         })
       );
+
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error during login:", error);
     }

@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import Lottie from "lottie-react";
 import Loading from "@/Loading.json";
+import { useLogoutMutation } from "../lib/state/authApi";
 import { useGetUserDataQuery } from "../lib/state/userApi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const [logout] = useLogoutMutation();
   const navigate = useNavigate();
   const { accessToken } = useSelector((state) => state.auth);
   const { data: userData, isLoading, error } = useGetUserDataQuery();
@@ -20,7 +22,7 @@ function Dashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Lottie animationData={Loading} loop={true} className="w-1/2 h-1/2" />
+        <Lottie animationData={Loading} loop={true} className="w-20 h-20" />
       </div>
     );
   }
@@ -32,12 +34,28 @@ function Dashboard() {
       </div>
     );
   }
+  const handleLogout = async () => {
+    try {
+      await logout();
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
 
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="h-screen flex flex-col gap-5 items-center justify-center">
       <h1 className="font-roboto-condensed text-3xl text-white">
         Welcome, {user?.username || "Guest"}
       </h1>
+
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer"
+      >
+        Logout
+      </button>
     </div>
   );
 }

@@ -152,6 +152,13 @@ const logout = async (req, res) => {
       sameSite: "strict",
     });
 
+    // Clear the access token cookie
+    res.clearCookie("accessToken", {
+      httpOnly: false,
+      secure: false, // Set to true if using HTTPS
+      sameSite: "strict",
+    });
+
     res.status(200).json({ message: "User logged out successfully" });
   } catch (error) {
     logger.error("Error in logout controller", error);

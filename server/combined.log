@@ -254,3 +254,64 @@
 {"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
 {"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
 {"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: undefined","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"Server running on port 8000","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"error","message":"Error in login controller Cannot read properties of undefined (reading 'username')","service":"fun quizzes","stack":"TypeError: Cannot read properties of undefined (reading 'username')\n    at login (/Users/markpc/Documents/My Projects/React/football_quiz_game/server/src/controllers/authControllers.js:90:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+{"level":"error","message":"Error in login controller Cannot read properties of undefined (reading 'username')","service":"fun quizzes","stack":"TypeError: Cannot read properties of undefined (reading 'username')\n    at login (/Users/markpc/Documents/My Projects/React/football_quiz_game/server/src/controllers/authControllers.js:90:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+{"level":"error","message":"Error in login controller Cannot read properties of undefined (reading 'username')","service":"fun quizzes","stack":"TypeError: Cannot read properties of undefined (reading 'username')\n    at login (/Users/markpc/Documents/My Projects/React/football_quiz_game/server/src/controllers/authControllers.js:90:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+{"level":"error","message":"Error in login controller Cannot read properties of undefined (reading 'username')","service":"fun quizzes","stack":"TypeError: Cannot read properties of undefined (reading 'username')\n    at login (/Users/markpc/Documents/My Projects/React/football_quiz_game/server/src/controllers/authControllers.js:90:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+{"level":"error","message":"Error in login controller Cannot read properties of undefined (reading 'username')","service":"fun quizzes","stack":"TypeError: Cannot read properties of undefined (reading 'username')\n    at login (/Users/markpc/Documents/My Projects/React/football_quiz_game/server/src/controllers/authControllers.js:90:15)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}
+{"level":"info","message":"Server running on port 8000","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: undefined","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: undefined","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: undefined","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: undefined","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: undefined","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: undefined","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}
+{"level":"info","message":"User data retrieved for user: [object Object]","service":"fun quizzes"}

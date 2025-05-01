@@ -51,6 +51,14 @@ const signup = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days is how long the cookie will last
     });
 
+    // Set the access token in a cookie
+    res.cookie("accessToken", accessToken, {
+      httpOnly: false,
+      secure: false, // Set to true if using HTTPS
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes for the access token, for example
+    });
+
     // Send access token
     // 201 means request was successful and new resource was created
     // .json converts the response to JSON format
@@ -106,10 +114,23 @@ const login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
+    // Set the access token in a cookie
+    res.cookie("accessToken", accessToken, {
+      httpOnly: false,
+      secure: false, // Set to true if using HTTPS
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes for the access token, for example
+    });
+
     // 200 means request was success
     res.status(200).json({
       message: "User logged in successfully",
       accessToken,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      },
     });
   } catch (error) {
     logger.error("Error in login controller", error);
@@ -168,6 +189,14 @@ const refreshToken = (req, res) => {
       secure: false,
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    // Set the new access token in the cookie
+    res.cookie("accessToken", accessToken, {
+      httpOnly: false,
+      secure: false, // Set to true if using HTTPS
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes for the access token
     });
 
     res.status(200).json({

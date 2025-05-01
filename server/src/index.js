@@ -6,6 +6,7 @@ const logger = require("./helpers/logger");
 
 // IMPORT ROUTES
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 // CONFIGURATION
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(
 
 // ROUTES
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 //SERVER
 const PORT = process.env.PORT || 5000;

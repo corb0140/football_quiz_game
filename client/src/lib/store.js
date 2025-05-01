@@ -16,7 +16,9 @@
  */
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./state/authApi";
+import { userApi } from "./state/userApi";
 import authReducer from "./state/authSlice";
+import userReducer from "./state/userSlice";
 
 /**
  * @description This function comes from Redux Toolkit and is a wrapper around Redux's createStore.
@@ -39,7 +41,11 @@ export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     auth: authReducer,
+    [userApi.reducerPath]: userApi.reducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(userApi.middleware),
 });

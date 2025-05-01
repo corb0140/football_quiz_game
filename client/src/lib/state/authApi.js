@@ -5,13 +5,6 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000/auth", // Base URL for the API
     credentials: "include", // Include cookies in requests
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState.accessToken;
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
   }),
   endpoints: (builder) => ({
     signup: builder.mutation({
@@ -37,9 +30,6 @@ export const authApi = createApi({
     refreshToken: builder.mutation({
       query: () => "/refresh-token",
     }),
-    getUserData: builder.query({
-      query: () => "/dashboard",
-    }),
   }),
 });
 
@@ -48,5 +38,4 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRefreshTokenMutation,
-  useGetUserDataQuery,
 } = authApi;

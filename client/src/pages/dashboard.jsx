@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
 import Lottie from "lottie-react";
 import Loading from "@/Loading.json";
-import { useGetUserDataQuery } from "../lib/state/authApi";
+import { useGetUserDataQuery } from "../lib/state/userApi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const navigate = useNavigate();
   const { accessToken } = useSelector((state) => state.auth);
-  const { data: user, isLoading, error } = useGetUserDataQuery();
+  const { data: userData, isLoading, error } = useGetUserDataQuery();
+  const user = userData?.user;
 
   useEffect(() => {
     if (!accessToken) {
-      navigate("/login");
+      navigate("/");
     }
   }, [accessToken, navigate]);
 
@@ -33,8 +34,8 @@ function Dashboard() {
   }
 
   return (
-    <div className="h-screen">
-      <h1 className="font-roboto-condensed text-3xl">
+    <div className="h-screen flex items-center justify-center">
+      <h1 className="font-roboto-condensed text-3xl text-white">
         Welcome, {user?.username || "Guest"}
       </h1>
     </div>

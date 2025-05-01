@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import axios from "../api/axios";
 import { ArrowLeft, Eye, EyeClosed } from "lucide-react";
 import { css, keyframes } from "@emotion/react";
 import { Link } from "react-router-dom";
+import { useSignupMutation } from "../lib/state/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../lib/state/authSlice";
 
 const loginButtonAnimation = keyframes`
   0% {
@@ -14,6 +16,8 @@ const loginButtonAnimation = keyframes`
 `;
 
 function Signup() {
+  const dispatch = useDispatch();
+  const [signup, { isLoading }] = useSignupMutation();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,13 +27,18 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/signup", {
+      const response = await signup({
         username,
         email,
         password,
-      });
-      console.log("Signup successful:", response.data);
-      alert("Signup successful");
+      }).unwrap();
+      console.log("Signup successful:", response);
+      dispatch(
+        setCredentials({
+          user: response.user,
+          accessToken: response.accessToken,
+        })
+      );
     } catch (error) {
       console.error("Error during signup:", error);
     }
@@ -140,6 +149,7 @@ function Signup() {
 
             {/* SIGNUP BUTTON */}
             <button
+              disabled={isLoading}
               type="submit"
               className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded hover:text-blue-500
               transition duration-500 cursor-pointer"

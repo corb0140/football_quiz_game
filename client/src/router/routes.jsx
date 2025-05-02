@@ -7,6 +7,7 @@ import Login from "../pages/login";
 import ForgotPassword from "../pages/forgot-password";
 import ResetPassword from "../pages/reset-password";
 import Dashboard from "../pages/dashboard";
+import Settings from "../pages/settings";
 
 function AppRouter() {
   return (
@@ -23,6 +24,15 @@ function AppRouter() {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute>
+              <Settings />
             </PrivateRoute>
           }
         />

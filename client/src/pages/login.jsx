@@ -5,6 +5,8 @@ import { useLoginMutation } from "../lib/state/authApi";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../lib/state/authSlice";
 import { useNavigate } from "react-router-dom";
+import formImage from "../assets/imgs/form_image.jpg";
+import logo from "../assets/imgs/logo.svg";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -38,18 +40,19 @@ function Login() {
 
   return (
     <div className="h-full w-full py-5 flex justify-center">
-      <div className="h-full w-[70%] flex rounded">
+      <div className="h-full w-[70%] flex">
         {/* LEFT */}
         <div
-          className="hidden bg-[url(/imgs/signup_image.jpg)] h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl
+          style={{ backgroundImage: `url(${formImage})` }}
+          className="hidden h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl
         lg:block"
         ></div>
 
         {/* RIGHT */}
-        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white rounded lg:rounded-tr lg:rounded-br">
+        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white not-lg:rounded lg:rounded-tr lg:rounded-br">
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
-            <img src="/imgs/logo.svg" alt="Logo" className="h-8 w-8 mt-3" />
+            <img src={logo} alt="Logo" className="h-8 w-8 mt-3" />
             <h1 className="text-center text-2xl font-bold mt-4 font-roboto-condensed">
               Football Quiz Game
             </h1>

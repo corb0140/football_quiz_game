@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../lib/state/authSlice";
+import logo from "../assets/imgs/logo.svg";
+import formImage from "../assets/imgs/form_image.jpg";
 
 const loginButtonAnimation = keyframes`
   0% {
@@ -57,13 +59,16 @@ function Signup() {
     <div className="h-full w-full py-5 flex justify-center">
       <div className="h-full w-[70%] flex rounded">
         {/* LEFT */}
-        <div className="bg-[url(/imgs/signup_image.jpg)] h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl"></div>
+        <div
+          style={{ backgroundImage: `url(${formImage})` }}
+          className="h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl"
+        ></div>
 
         {/* RIGHT */}
         <div className="flex flex-col h-full w-1/2 p-10 gap-8 bg-white rounded-tr rounded-br">
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
-            <img src="/imgs/logo.svg" alt="Logo" className="h-8 w-8 mt-3" />
+            <img src={logo} alt="Logo" className="h-8 w-8 mt-3" />
             <h1 className="text-center text-2xl font-bold mt-4 font-roboto-condensed">
               Football Quiz Game
             </h1>

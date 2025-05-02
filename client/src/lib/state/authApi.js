@@ -1,10 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { customFetchBaseQuery } from "../../utils/customFetchBaseQuery";
 
 export const authApi = createApi({
   reducerPath: "authApi", // Unique key for the API slice
-  baseQuery: fetchBaseQuery({
+  baseQuery: customFetchBaseQuery({
     baseUrl: "http://localhost:8000/auth", // Base URL for the API
-    credentials: "include", // Include cookies in requests
   }),
   endpoints: (builder) => ({
     signup: builder.mutation({
@@ -28,7 +28,10 @@ export const authApi = createApi({
       }),
     }),
     refreshToken: builder.mutation({
-      query: () => "/refresh-token",
+      query: () => ({
+        url: "/refresh-token",
+        method: "POST",
+      }),
     }),
   }),
 });

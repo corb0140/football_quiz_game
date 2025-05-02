@@ -28,7 +28,7 @@ const authenticateUser = (req, res, next) => {
     req.user = decoded; // Attach the user information to the request object
     next(); // Call the next middleware or route handler
   } catch (error) {
-    return res.status(403).json({ message: "Forbidden" });
+    return res.status(401).json({ message: "Access token expired" });
   }
 };
 

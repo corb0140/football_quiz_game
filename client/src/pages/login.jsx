@@ -24,7 +24,6 @@ function Login() {
       console.log("Login response:", response);
       dispatch(
         setCredentials({
-          user: response.user,
           accessToken: response.accessToken,
         })
       );

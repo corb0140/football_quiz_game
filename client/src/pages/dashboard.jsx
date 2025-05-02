@@ -1,23 +1,12 @@
-import React, { useEffect } from "react";
 import Lottie from "lottie-react";
 import Loading from "@/Loading.json";
 import { useLogoutMutation } from "../lib/state/authApi";
 import { useGetUserDataQuery } from "../lib/state/userApi";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [logout] = useLogoutMutation();
-  const navigate = useNavigate();
-  const { accessToken } = useSelector((state) => state.auth);
   const { data: userData, isLoading, error } = useGetUserDataQuery();
   const user = userData?.user;
-
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/");
-    }
-  }, [accessToken, navigate]);
 
   if (isLoading) {
     return (

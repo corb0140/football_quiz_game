@@ -40,10 +40,13 @@ function Login() {
     <div className="h-full w-full py-5 flex justify-center">
       <div className="h-full w-[70%] flex rounded">
         {/* LEFT */}
-        <div className="bg-[url(/imgs/signup_image.jpg)] h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl"></div>
+        <div
+          className="hidden bg-[url(/imgs/signup_image.jpg)] h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl
+        lg:block"
+        ></div>
 
         {/* RIGHT */}
-        <div className="flex flex-col h-full w-1/2 p-10 gap-8 bg-white rounded-tr rounded-br">
+        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white rounded lg:rounded-tr lg:rounded-br">
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
             <img src="/imgs/logo.svg" alt="Logo" className="h-8 w-8 mt-3" />

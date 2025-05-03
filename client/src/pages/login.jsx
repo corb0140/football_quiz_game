@@ -52,13 +52,13 @@ function Login() {
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
             <img src={logo} alt="Logo" className="h-8 w-8 mt-3" />
-            <h1 className="text-center text-2xl font-bold mt-4 font-roboto-condensed">
+            <h1 className="text-center text-2xl font-bold mt-4 ">
               Football Quiz Game
             </h1>
           </div>
 
           {/* DETAIL */}
-          <p className="font-semibold text-3xl text-start font-roboto-condensed">
+          <p className="font-semibold text-3xl text-start ">
             Test your knowledge of the beautiful sport of football
           </p>
 
@@ -67,21 +67,21 @@ function Login() {
             onSubmit={handleLogin}
             className="bg-white h-auto w-full flex flex-col items-start gap-4"
           >
-            <p className="opacity-50 text-start font-roboto-condensed">
+            <p className="opacity-50 text-start ">
               Welcome back! Please login to continue to the game.
             </p>
             <div className="w-full">
               {/* USERNAME */}
               <div className={`${focusInputClass} rounded-t`}>
                 <div className="h-1/2 w-full flex items-center justify-start">
-                  <p className="text-start opacity-50 text-sm font-semibold font-roboto-condensed">
+                  <p className="text-start opacity-50 text-sm font-semibold ">
                     Username
                   </p>
                 </div>
 
                 <input
                   type="text"
-                  className="w-full h-1/2 bg-transparent outline-none font-roboto-condensed"
+                  className="w-full h-1/2 bg-transparent outline-none "
                   placeholder="Enter your username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -92,7 +92,7 @@ function Login() {
               {/* PASSWORD */}
               <div className={`${focusInputClass} rounded-b`}>
                 <div className="h-1/2 w-full flex items-center justify-start">
-                  <p className="text-start opacity-50 text-sm font-semibold font-roboto-condensed">
+                  <p className="text-start opacity-50 text-sm font-semibold ">
                     Password
                   </p>
                 </div>
@@ -100,7 +100,7 @@ function Login() {
                 <div className="flex items-center justify-between w-full h-1/2">
                   <input
                     type={showPassword ? "text" : "password"}
-                    className="bg-transparent outline-none font-roboto-condensed"
+                    className="bg-transparent outline-none "
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -125,7 +125,7 @@ function Login() {
             <button
               onClick={() => console.log("10")}
               type="button"
-              className="text-sm font-semibold self-end font-roboto-condensed cursor-pointer"
+              className="text-sm font-semibold self-end  cursor-pointer"
             >
               Forgot Password
             </button>
@@ -138,9 +138,7 @@ function Login() {
                 className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded
                 hover:text-blue-500 transition duration-300 cursor-pointer py-4 px-8 flex items-center"
               >
-                <p className="uppercase tracking-wider font-roboto-condensed">
-                  Login
-                </p>
+                <p className="uppercase tracking-wider ">Login</p>
               </button>
 
               <Link
@@ -148,7 +146,7 @@ function Login() {
                 className="group border-2 border-dark-blue text-white font-semibold text-lg w-full h-11 rounded 
                    transition duration-500 cursor-pointer py-4 px-8 flex items-center"
               >
-                <p className="uppercase tracking-wider font-roboto-condensed text-dark-blue group-hover:text-blue-500 transition duration-500">
+                <p className="uppercase tracking-wider  text-dark-blue group-hover:text-blue-500 transition duration-500">
                   Signup
                 </p>
               </Link>
@@ -156,7 +154,7 @@ function Login() {
           </form>
 
           {/* Message */}
-          <p className="text-sm font-roboto-condensed opacity-70 text-start">
+          <p className="text-sm  opacity-70 text-start">
             By logging in, you agree to give me your soul should you score below
             80 in any quiz.
           </p>

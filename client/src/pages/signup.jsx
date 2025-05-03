@@ -61,21 +61,22 @@ function Signup() {
         {/* LEFT */}
         <div
           style={{ backgroundImage: `url(${formImage})` }}
-          className="h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl"
+          className="hidden h-full w-1/2 bg-cover bg-center bg-no-repeat rounded-tl rounded-bl
+        lg:block"
         ></div>
 
         {/* RIGHT */}
-        <div className="flex flex-col h-full w-1/2 p-10 gap-8 bg-white rounded-tr rounded-br">
+        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white rounded-tr rounded-br">
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
             <img src={logo} alt="Logo" className="h-8 w-8 mt-3" />
-            <h1 className="text-center text-2xl font-bold mt-4 font-roboto-condensed">
+            <h1 className="text-center text-2xl font-bold mt-4 ">
               Football Quiz Game
             </h1>
           </div>
 
           {/* DETAIL */}
-          <p className="font-semibold text-3xl text-start font-roboto-condensed">
+          <p className="font-semibold text-3xl text-start ">
             Test your knowledge of the beautiful sport of football
           </p>
 
@@ -84,7 +85,7 @@ function Signup() {
             onSubmit={handleSignup}
             className="bg-white h-auto w-full flex flex-col items-start gap-4"
           >
-            <p className="opacity-50 text-start font-roboto-condensed">
+            <p className="opacity-50 text-start ">
               Welcome! Please signup to continue to the game.
             </p>
 
@@ -92,14 +93,14 @@ function Signup() {
               {/* USERNAME */}
               <div className={`${focusInputClass} rounded-t`}>
                 <div className="h-1/2 w-full flex items-center justify-start">
-                  <p className="text-start opacity-50 text-sm font-semibold font-roboto-condensed">
+                  <p className="text-start opacity-50 text-sm font-semibold ">
                     Username
                   </p>
                 </div>
 
                 <input
                   type="text"
-                  className="w-full h-1/2 bg-transparent outline-none font-roboto-condensed"
+                  className="w-full h-1/2 bg-transparent outline-none "
                   placeholder="Enter your username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -110,14 +111,14 @@ function Signup() {
               {/* EMAIL */}
               <div className={focusInputClass}>
                 <div className="h-1/2 w-full flex items-center justify-start">
-                  <p className="text-start opacity-50 text-sm font-semibold font-roboto-condensed">
+                  <p className="text-start opacity-50 text-sm font-semibold ">
                     Email Address
                   </p>
                 </div>
 
                 <input
                   type="text"
-                  className="w-full h-1/2 bg-transparent outline-none font-roboto-condensed"
+                  className="w-full h-1/2 bg-transparent outline-none "
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -128,7 +129,7 @@ function Signup() {
               {/* PASSWORD */}
               <div className={`${focusInputClass} rounded-b`}>
                 <div className="h-1/2 w-full flex items-center justify-start">
-                  <p className="text-start opacity-50 text-sm font-semibold font-roboto-condensed">
+                  <p className="text-start opacity-50 text-sm font-semibold ">
                     Password
                   </p>
                 </div>
@@ -136,7 +137,7 @@ function Signup() {
                 <div className="flex items-center justify-between w-full h-1/2">
                   <input
                     type={showPassword ? "text" : "password"}
-                    className="bg-transparent outline-none font-roboto-condensed"
+                    className="bg-transparent outline-none "
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -165,13 +166,11 @@ function Signup() {
               className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded hover:text-blue-500
               transition duration-500 cursor-pointer"
             >
-              <p className="uppercase tracking-wider font-roboto-condensed">
-                Signup
-              </p>
+              <p className="uppercase tracking-wider ">Signup</p>
             </button>
           </form>
 
-          <p className="text-sm font-roboto-condensed opacity-70 text-start">
+          <p className="text-sm  opacity-70 text-start">
             By signing up, you agree to give me your soul should you score below
             80 in any quiz.
           </p>

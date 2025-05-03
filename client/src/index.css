@@ -11,4 +11,47 @@
   /* colors */
   --color-dark-blue: #0f172a;
   --color-blueish-gray: rgb(30, 41, 59);
+
+  /* media queries */
+  --breakpoint-md2: 820px;
+}
+
+@layer base {
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    font-family: var(--font-roboto-condensed);
+    background-color: var(--color-dark-blue);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-roboto-condensed);
+    color: white;
+  }
+
+  button,
+  a {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .bg-gradient {
+    background: linear-gradient(to bottom right, #004d98 50%, #a50044);
+  }
+
+  .bg-gradient-2 {
+    background: linear-gradient(
+      to bottom right,
+      --color-dark-blue 0%,
+      --color-blueish-gray 100%
+    );
+  }
 }

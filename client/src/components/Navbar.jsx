@@ -1,32 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/imgs/logo.svg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { links } from "../data/nav-links";
-import { useGetUserDataQuery } from "../lib/state/userApi";
-import Lottie from "lottie-react";
-import Loading from "@/Loading.json";
+import { Mail } from "lucide-react";
 
 function Navbar() {
-  const { data: userData, isLoading, error } = useGetUserDataQuery();
-  const user = userData?.user;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const tabWidth = 96; // Width of each tab
+  const navigate = useNavigate();
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Lottie animationData={Loading} loop={true} className="w-20 h-20" />
-      </div>
-    );
-  }
+  const handleTabClick = (index, link) => {
+    setActiveIndex(index);
 
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-red-500">Error: {error.message}</p>
-      </div>
-    );
-  }
+    navigate(link);
+  };
+
   return (
-    <div className="h-18 w-screen fixed shadow-sm px-10 flex items-center justify-between">
+    <div className="h-14 w-screen fixed px-10 flex items-center justify-between">
       {/* LOGO & APP NAME */}
       <div className="flex items-center gap-2">
         <img src={logo} className="h-4 w-4" />
@@ -37,28 +27,49 @@ function Navbar() {
       </div>
 
       {/* LINKS */}
-      <ul className="flex gap-8">
-        {links.map((link, index) => (
-          <li
-            key={index}
-            className="text-white font-roboto-condensed text-lg cursor-pointer"
-          >
-            <Link to={link.link}>{link.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <div className="relative">
+        <ul className="flex bg-white rounded-full h-8 items-center relative">
+          {/* Sliding indicator */}
+          <div
+            className="absolute h-full bg-blue-500 rounded-full shadow-lg transition-all duration-300 ease-in-out"
+            style={{
+              width: `${tabWidth}px`,
+              transform: `translateX(${activeIndex * tabWidth}px)`,
+            }}
+          />
+
+          {/* TABS */}
+          {links.map((link, index) => (
+            <li
+              key={index}
+              className="z-10 font-roboto-condensed h-full w-24 flex items-center justify-center"
+            >
+              <button
+                className="font-roboto-condensed text-sm font-semibold h-full w-full flex items-center justify-center cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleTabClick(index, link.link);
+                }}
+              >
+                {link.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* PROFILE IMAGE & NAME */}
-      <Link to="/settings" className="flex items-center gap-2 cursor-pointer">
+      <div className="flex items-center gap-2 cursor-pointer">
+        <div className="h-8 w-8 bg-white rounded-full flex items-center justify-center">
+          <Mail className="h-4 w-4" />
+        </div>
+
         <img
           src="https://picsum.photos/200/300"
           alt="Profile"
           className="rounded-full h-8 w-8"
         />
-        <span className="text-white font-roboto-condensed text-lg">
-          {user?.username}
-        </span>
-      </Link>
+      </div>
     </div>
   );
 }

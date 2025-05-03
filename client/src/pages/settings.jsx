@@ -1,4 +1,3 @@
-import Navbar from "../components/navbar";
 import { useLogoutMutation } from "../lib/state/authApi/";
 
 function Settings() {
@@ -15,8 +14,6 @@ function Settings() {
   };
   return (
     <div>
-      <Navbar />
-
       <div className="h-screen flex flex-col gap-5 items-center justify-center">
         <button
           onClick={handleLogout}

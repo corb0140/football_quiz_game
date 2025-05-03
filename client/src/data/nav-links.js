@@ -4,8 +4,8 @@ export const links = [
     name: "Dashboard",
   },
   {
-    link: "/leaderboards",
-    name: "Leaderboards",
+    link: "/quizzes",
+    name: "Quizzes",
   },
   {
     link: "/rules",
@@ -14,5 +14,9 @@ export const links = [
   {
     link: "/contact",
     name: "Contact",
+  },
+  {
+    link: "/settings",
+    name: "Settings",
   },
 ];

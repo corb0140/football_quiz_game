@@ -3,7 +3,7 @@ import AppRouter from "./router/routes";
 
 function App() {
   return (
-    <div className="bg-gradient-2 w-full h-screen overflow-hidden">
+    <div className="not-first:w-full h-screen">
       <AppRouter />
     </div>
   );

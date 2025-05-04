@@ -8,8 +8,8 @@ export const links = [
     name: "Quizzes",
   },
   {
-    link: "/rules",
-    name: "Rules",
+    link: "/leaderboards",
+    name: "Leaderboards",
   },
   {
     link: "/contact",

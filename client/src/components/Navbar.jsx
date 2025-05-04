@@ -16,7 +16,7 @@ function Navbar(props) {
   };
 
   return (
-    <div className="h-14 w-screen fixed px-10 flex items-center justify-between">
+    <div className="h-14 z-10 w-screen fixed px-10 flex items-center justify-between bg-dark-green shadow-sm">
       {/* LOGO & APP NAME */}
       <div className="flex items-center gap-2">
         <img src={logo} className="h-4 w-4" />

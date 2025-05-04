@@ -10,7 +10,7 @@ import ResetPassword from "../pages/reset-password";
 import Dashboard from "../pages/dashboard";
 import Settings from "../pages/settings";
 import Quizzes from "../pages/quizzes";
-import Rules from "../pages/rules";
+import Leaderboards from "../pages/leaderboards";
 import Contact from "../pages/contact";
 
 function AppRouter() {
@@ -58,10 +58,10 @@ function AppRouter() {
           />
 
           <Route
-            path="/rules"
+            path="/leaderboards"
             element={
               <PrivateRoute>
-                <Rules />
+                <Leaderboards />
               </PrivateRoute>
             }
           />

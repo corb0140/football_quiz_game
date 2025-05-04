@@ -56,7 +56,7 @@ function Signup() {
     "relative border border-gray-200 pl-4 h-16 w-full flex flex-col focus-within:border-dark-blue before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-dark-blue before:scale-x-0 focus-within:before:scale-x-100 before:origin-left before:transition-all before:duration-300";
 
   return (
-    <div className="h-full w-full py-5 flex justify-center">
+    <div className="h-full w-full py-5 flex justify-center text-black">
       <div className="h-full w-[70%] flex rounded">
         {/* LEFT */}
         <div
@@ -66,7 +66,7 @@ function Signup() {
         ></div>
 
         {/* RIGHT */}
-        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white rounded-tr rounded-br">
+        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white lg:border not-lg:shadow-lg not-lg:rounded lg:rounded-tr lg:rounded-br">
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
             <img src={logo} alt="Logo" className="h-8 w-8 mt-3" />
@@ -163,7 +163,7 @@ function Signup() {
             <button
               disabled={isLoading}
               type="submit"
-              className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded hover:text-blue-500
+              className="bg-dark-green text-white font-semibold text-lg w-full h-11 rounded hover:text-bright-green
               transition duration-500 cursor-pointer"
             >
               <p className="uppercase tracking-wider ">Signup</p>
@@ -184,7 +184,7 @@ function Signup() {
               }
             `}
           >
-            <ArrowLeft className="h-5 w-5 text-dark-blue arrow" />
+            <ArrowLeft className="h-5 w-5 text-dark-green arrow" />
             <p>Back to login screen</p>
           </Link>
         </div>

@@ -9,8 +9,10 @@
   --font-roboto-condensed: "Roboto Condensed", sans-serif;
 
   /* colors */
-  --color-dark-blue: #0f172a;
-  --color-blueish-gray: rgb(30, 41, 59);
+  --color-dark-green: #0b3119;
+  --color-darker-green: #072613;
+  --color-light-green: #1c4727;
+  --color-bright-green: #377c40;
 
   /* media queries */
   --breakpoint-md2: 820px;
@@ -23,7 +25,8 @@
 
   body {
     font-family: var(--font-roboto-condensed);
-    background-color: var(--color-dark-blue);
+    background-color: var(--color-dark-green);
+    color: white;
   }
 
   h1,
@@ -53,5 +56,17 @@
       --color-dark-blue 0%,
       --color-blueish-gray 100%
     );
+  }
+
+  .hover-rounded-animation {
+    @apply transition-all duration-500 ease-in-out rounded-bl-sm rounded-tr-sm hover:rounded-tl-sm hover:rounded-br-sm hover:rounded-bl-none hover:rounded-tr-none;
+  }
+
+  .shadow-custom {
+    @apply shadow-lg shadow-[#a50044];
+  }
+
+  .grid-custom {
+    @apply grid grid-cols-1 grid-rows-[repeat(10,20vh)] lg:grid-rows-[repeat(10,8vh)];
   }
 }

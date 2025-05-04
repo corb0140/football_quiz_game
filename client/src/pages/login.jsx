@@ -38,7 +38,7 @@ function Login() {
     "relative border border-gray-200 pl-4 h-16 w-full flex flex-col focus-within:border-dark-blue before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-dark-blue before:scale-x-0 focus-within:before:scale-x-100 before:origin-left before:transition-all before:duration-300";
 
   return (
-    <div className="h-full w-full py-5 flex justify-center">
+    <div className="h-full w-full py-5 flex justify-center text-black">
       <div className="h-full w-[70%] flex">
         {/* LEFT */}
         <div
@@ -48,7 +48,7 @@ function Login() {
         ></div>
 
         {/* RIGHT */}
-        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white not-lg:rounded lg:rounded-tr lg:rounded-br">
+        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white lg:border not-lg:shadow-lg not-lg:rounded lg:rounded-tr lg:rounded-br">
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
             <img src={logo} alt="Logo" className="h-8 w-8 mt-3" />
@@ -135,18 +135,18 @@ function Login() {
               <button
                 disabled={isLoading}
                 type="submit"
-                className="bg-dark-blue text-white font-semibold text-lg w-full h-11 rounded
-                hover:text-blue-500 transition duration-300 cursor-pointer py-4 px-8 flex items-center"
+                className="bg-dark-green text-white font-semibold text-lg w-full h-11 rounded
+                hover:text-bright-green transition duration-300 cursor-pointer py-4 px-8 flex items-center"
               >
                 <p className="uppercase tracking-wider ">Login</p>
               </button>
 
               <Link
                 to="/signup"
-                className="group border-2 border-dark-blue text-white font-semibold text-lg w-full h-11 rounded 
+                className="group border-2 border-dark-green text-dark-green font-semibold text-lg w-full h-11 rounded 
                    transition duration-500 cursor-pointer py-4 px-8 flex items-center"
               >
-                <p className="uppercase tracking-wider  text-dark-blue group-hover:text-blue-500 transition duration-500">
+                <p className="uppercase tracking-wider text-dark-green group-hover:text-bright-green transition duration-500">
                   Signup
                 </p>
               </Link>

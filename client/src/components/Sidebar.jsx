@@ -15,12 +15,12 @@ function Sidebar(props) {
     >
       {/* HEADER */}
       <div className="flex justify-between items-center p-4">
-        <h1 className="text-dark-blue font-semibold text-xl">
+        <h1 className="text-dark-green font-semibold text-xl">
           Football Quiz Game
         </h1>
 
         <CircleX
-          className="h-6 w-6 text-black cursor-pointer hover:text-dark-blue hover:scale-110 transition duration-300"
+          className="h-6 w-6 text-black cursor-pointer hover:text-dark-green hover:scale-110 transition duration-300"
           onClick={props.onClose}
         />
       </div>
@@ -35,11 +35,11 @@ function Sidebar(props) {
           />
 
           {/* USERNAME */}
-          <p className="text-dark-blue text-lg font-semibold">{username}</p>
+          <p className="text-dark-green text-lg font-semibold">{username}</p>
 
           {/* EMAIL */}
 
-          <Mail className="h-6 w-6 text-dark-blue" />
+          <Mail className="h-6 w-6 text-dark-green" />
         </div>
 
         {/* LINKS */}
@@ -48,12 +48,12 @@ function Sidebar(props) {
           {links.map((link, index) => (
             <li
               key={index}
-              className="w-50 py-2 border-3 border-dark-blue hover-rounded-animation flex items-center justify-center cursor-pointer"
+              className="w-50 py-2 border-3 border-dark-green hover-rounded-animation flex items-center justify-center cursor-pointer"
             >
               <Link
                 to={link.link}
                 onClick={() => props.onClose()}
-                className="h-full w-full text-dark-blue text-lg font-semibold flex items-center justify-center"
+                className="h-full w-full text-dark-green text-lg font-semibold flex items-center justify-center"
               >
                 {link.name}
               </Link>

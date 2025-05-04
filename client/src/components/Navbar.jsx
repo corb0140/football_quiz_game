@@ -26,10 +26,10 @@ function Navbar(props) {
 
       {/* LINKS */}
       <div className="relative hidden md2:block">
-        <ul className="flex bg-white rounded-full h-8 items-center relative">
+        <ul className="flex bg-bright-green rounded-full h-8 items-center relative">
           {/* Sliding indicator */}
           <div
-            className="absolute h-full bg-blue-500 rounded-full shadow-lg transition-all duration-300 ease-in-out"
+            className="absolute h-full bg-darker-green rounded-full transition-all duration-300 ease-in-out"
             style={{
               width: `${tabWidth}px`,
               transform: `translateX(${activeIndex * tabWidth}px)`,
@@ -59,7 +59,7 @@ function Navbar(props) {
       {/* PROFILE IMAGE & NAME */}
       <div className="md2:flex items-center gap-2 cursor-pointer hidden">
         <div className="h-8 w-8 bg-white rounded-full flex items-center justify-center">
-          <Mail className="h-4 w-4" />
+          <Mail className="h-4 w-4 text-dark-green" />
         </div>
 
         <img

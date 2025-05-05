@@ -39,7 +39,7 @@ function Login() {
 
   return (
     <div className="h-full w-full py-5 flex justify-center text-black">
-      <div className="h-full w-[70%] flex">
+      <div className="h-full w-[80%] md:w-[70%] flex">
         {/* LEFT */}
         <div
           style={{ backgroundImage: `url(${formImage})` }}

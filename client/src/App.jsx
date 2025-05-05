@@ -3,7 +3,7 @@ import AppRouter from "./router/routes";
 
 function App() {
   return (
-    <div className="not-first:w-full h-screen">
+    <div className="not-first:w-full h-screen w-screen">
       <AppRouter />
     </div>
   );

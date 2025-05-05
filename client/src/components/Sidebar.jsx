@@ -11,7 +11,7 @@ function Sidebar(props) {
     <div
       className={`fixed right-0 transform md2:hidden ${
         props.isOpen ? "-translate-x-0" : "translate-x-full"
-      } transition duration-300 ease-in-out min-h-screen bg-white shadow-lg w-70 z-10`}
+      } transition duration-300 ease-in-out min-h-screen bg-white shadow-lg w-70 z-20`}
     >
       {/* HEADER */}
       <div className="flex justify-between items-center p-4">

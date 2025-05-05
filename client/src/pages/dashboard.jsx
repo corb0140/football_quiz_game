@@ -60,20 +60,24 @@ function Dashboard() {
         <h2 className="text-lg font-semibold">Top Quiz Categories</h2>
 
         <div className="grid grid-cols-2 auto-rows-fr gap-3 flex-grow">
-          {dashboardQuizCategories.map((category, index) => (
-            <div
-              key={index}
-              className="h-full w-full shadow-md bg-light-green rounded-md row-span-2"
-            >
-              <Link
-                to={`/quizzes/${category.name}`}
-                className="text-lg font-semibold text-white text-center flex flex-col items-center justify-center gap-1 h-full"
+          {dashboardQuizCategories.map((category, index) => {
+            const route = category.name.toLowerCase().split(" ").join("-");
+
+            return (
+              <div
+                key={index}
+                className="h-full w-full shadow-md bg-light-green rounded-md row-span-2"
               >
-                {category.icon}
-                {category.name}
-              </Link>
-            </div>
-          ))}
+                <Link
+                  to={`./quizzes/${route}`}
+                  className="text-lg font-semibold text-white text-center flex flex-col items-center justify-center gap-1 h-full"
+                >
+                  {category.icon}
+                  {category.name}
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </Card>
 

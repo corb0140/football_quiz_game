@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import PrivateRoute from "../utils/private-route";
+import PrivateRoute from "./private-route";
 import Layout from "../components/Layout";
 
 import Signup from "../pages/signup";
@@ -12,17 +11,50 @@ import Settings from "../pages/settings";
 import Quizzes from "../pages/quizzes";
 import Leaderboards from "../pages/leaderboards";
 import Contact from "../pages/contact";
+import PlayerTrivia from "../pages/quizzes/player-trivia";
+import WorldCupTrivia from "../pages/quizzes/world-cup-trivia";
+import LeagueTrivia from "../pages/quizzes/league-trivia";
+import ChampionsLeagueTrivia from "../pages/quizzes/champions-league-trivia";
+import ManagerTrivia from "../pages/quizzes/manager-trivia";
+import ClubTrivia from "../pages/quizzes/club-trivia";
 
 function AppRouter() {
+  const publicRoutes = [
+    { path: "/", element: <Login /> },
+    { path: "/signup", element: <Signup /> },
+    { path: "/forgot-password", element: <ForgotPassword /> },
+    { path: "/reset-password", element: <ResetPassword /> },
+  ];
+
+  const protectedRoutes = [
+    { path: "/dashboard", element: <Dashboard /> },
+    { path: "/dashboard/quizzes/player-trivia", element: <PlayerTrivia /> },
+    {
+      path: "/dashboard/quizzes/world-cup-trivia",
+      element: <WorldCupTrivia />,
+    },
+    { path: "/dashboard/quizzes/league-trivia", element: <LeagueTrivia /> },
+    {
+      path: "/dashboard/quizzes/champions-league-trivia",
+      element: <ChampionsLeagueTrivia />,
+    },
+    { path: "/dashboard/quizzes/manager-trivia", element: <ManagerTrivia /> },
+    { path: "/dashboard/quizzes/club-trivia", element: <ClubTrivia /> },
+    { path: "/settings", element: <Settings /> },
+    { path: "/quizzes", element: <Quizzes /> },
+    { path: "/leaderboards", element: <Leaderboards /> },
+    { path: "/contact", element: <Contact /> },
+  ];
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        {/* Public Routes */}
+        {publicRoutes.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
 
-        {/* Protected Routes */}
+        {/* Protected Routes with Layout */}
         <Route
           element={
             <PrivateRoute>
@@ -30,53 +62,13 @@ function AppRouter() {
             </PrivateRoute>
           }
         >
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/settings"
-            element={
-              <PrivateRoute>
-                <Settings />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/quizzes"
-            element={
-              <PrivateRoute>
-                <Quizzes />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/leaderboards"
-            element={
-              <PrivateRoute>
-                <Leaderboards />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="/contact"
-            element={
-              <PrivateRoute>
-                <Contact />
-              </PrivateRoute>
-            }
-          />
+          {protectedRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
         </Route>
       </Routes>
     </Router>
   );
 }
+
 export default AppRouter;

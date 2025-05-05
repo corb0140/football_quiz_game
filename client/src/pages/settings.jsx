@@ -12,6 +12,7 @@ function Settings() {
       console.error("Error during logout:", error);
     }
   };
+
   return (
     <div>
       <div className="h-screen flex flex-col gap-5 items-center justify-center">

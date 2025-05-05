@@ -1,29 +1,15 @@
-import { useGetUserDataQuery } from "../lib/state/userApi.js";
-import Lottie from "lottie-react";
-import Loading from "@/Loading.json";
-import Card from "../components/Card.jsx";
+import { UserData } from "../utils/user-data.js";
+import Loader from "../components/Loader";
+import Card from "../components/Card";
 import { Link } from "react-router-dom";
 import { dashboardQuizCategories } from "../data/quiz-categories.js";
 import { Award, Medal } from "lucide-react";
 
 function Dashboard() {
-  const { data: userData, isLoading, error } = useGetUserDataQuery();
-  const user = userData?.user;
+  const { user, isLoading, error } = UserData();
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Lottie animationData={Loading} loop={true} className="w-20 h-20" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-red-500">Error: {error.message}</p>
-      </div>
-    );
+  if (isLoading || error) {
+    return <Loader isLoading={isLoading} error={error} />;
   }
 
   function getOrdinalSuffix(n) {

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "@/api/axios";
 import Cookies from "js-cookie";
+import { UserData } from "../../utils/user-data";
+import { Link } from "react-router-dom";
 
 function PlayerTrivia() {
-  const token = Cookies.get("access_token");
+  const token = Cookies.get("accessToken");
+  const { user } = UserData();
 
   const [quiz, setQuiz] = useState(null);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState(null);
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(15);
+  const [timer, setTimer] = useState(5);
   const [showResult, setShowResult] = useState(false);
   const [quizAttempts, setQuizAttempts] = useState(0);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
@@ -23,21 +26,29 @@ function PlayerTrivia() {
   }, []);
 
   useEffect(() => {
-    if (quiz && currentQuestionIdx < quiz.questions.length) {
-      setTimer(15);
-      const countdown = setInterval(() => {
-        setTimer((prev) => {
-          if (prev === 1) {
-            clearInterval(countdown);
+    if (showResult || !quiz || currentQuestionIdx >= quiz.questions.length)
+      return;
+
+    setTimer(5);
+
+    const countdown = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(countdown);
+
+          if (selectedOptionId === null) {
             handleAnswer(null);
           }
-          return prev - 1;
-        });
-      }, 1000);
-      return () => clearInterval(countdown);
-    }
-  }, [currentQuestionIdx, quiz]);
 
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(countdown);
+  }, [currentQuestionIdx, quiz, showResult]);
+
+  //   HANDLE ANSWER
   const handleAnswer = (optionId) => {
     if (selectedOptionId !== null) return; // prevent multiple selections
 
@@ -49,14 +60,16 @@ function PlayerTrivia() {
       correctOption &&
       correctOption.option_id === optionId;
 
-    setUserAnswers((prev) => [
-      ...prev,
+    const updatedAnswers = [
+      ...userAnswers,
       {
         question_id: question.question_id,
-        selected_option_id: optionId,
+        option_id: optionId,
         is_correct: isCorrect,
       },
-    ]);
+    ];
+
+    setUserAnswers(updatedAnswers);
 
     if (isCorrect) {
       setScore((prev) => prev + 1);
@@ -67,27 +80,27 @@ function PlayerTrivia() {
 
     setTimeout(() => {
       if (currentQuestionIdx + 1 === quiz.questions.length) {
-        submitQuiz();
+        submitQuiz(updatedAnswers);
       } else {
         setCurrentQuestionIdx((prev) => prev + 1);
         setSelectedOptionId(null);
         setIsAnswerCorrect(null);
       }
-    }, 5000);
+    }, 1000);
   };
 
-  const submitQuiz = async () => {
+  const submitQuiz = async (answers) => {
     try {
       if (quizAttempts >= 2) {
         setShowResult(true);
         return;
       }
 
-      const answers = userAnswers;
+      setQuizAttempts((prev) => prev + 1);
 
       const res = await axios.post(
         `/quiz/${quiz.quizId}/submit`,
-        { answers },
+        { answers, username: user.username },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -110,7 +123,6 @@ function PlayerTrivia() {
       setFeedbackMsg(message);
       setScore(submittedScore);
 
-      setQuizAttempts(quizAttempts + 1);
       setShowResult(true);
     } catch (err) {
       console.error(err);
@@ -121,12 +133,41 @@ function PlayerTrivia() {
 
   if (showResult) {
     return (
-      <div className="p-4">
+      <div className="p-4 flex flex-col gap-4 items-center">
         <h2 className="text-xl font-bold mb-4">Quiz Completed</h2>
+
         <p className="text-lg">
           Your Score: {score} / {quiz.questions.length}
         </p>
+
         <p className="text-md">{feedbackMsg}</p>
+
+        {quizAttempts >= 2 ? (
+          <p className="text-md text-red-600">
+            You've reached the maximum number of attempts.
+          </p>
+        ) : (
+          <button
+            className="text-lg bg-bright-green py-3 w-40 text-center rounded"
+            onClick={() => {
+              setCurrentQuestionIdx(0);
+              setScore(0);
+              setSelectedOptionId(null);
+              setUserAnswers([]);
+              setShowResult(false);
+              setIsAnswerCorrect(null);
+            }}
+          >
+            Try Again
+          </button>
+        )}
+
+        <Link
+          className="text-lg bg-bright-green py-3 w-40 text-center rounded"
+          to="/dashboard"
+        >
+          Dashboard
+        </Link>
       </div>
     );
   }

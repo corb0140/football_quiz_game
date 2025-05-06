@@ -34,9 +34,10 @@ async function getQuiz(req, res, next) {
 async function submitQuiz(req, res, next) {
   try {
     const { quizId } = req.params;
-    const { answers } = req.body; // [{ question_id, option_id }, ...]
+    const { answers, username } = req.body;
     const userId = req.user.id;
-    const username = req.user.username;
+
+    console.log("Submitted answers:", answers);
 
     // calculate score
     let score = 0;
@@ -45,6 +46,11 @@ async function submitQuiz(req, res, next) {
         `SELECT is_correct FROM options WHERE option_id = $1`,
         [a.option_id]
       );
+      if (opt.rows.length === 0) {
+        console.warn(`No option found for option_id: ${a.option_id}`);
+        continue; // or return an error if this should never happen
+      }
+
       if (opt.rows[0].is_correct) score++;
     }
 

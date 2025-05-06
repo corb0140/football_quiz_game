@@ -11,8 +11,6 @@ function Quizzes() {
     return <Loader isLoading={isLoading} error={error} />;
   }
 
-  // min-md2:px-20 min-lg:px-50 min-xl:px-90
-
   return (
     <div className="relative top-14 h-[calc(100vh-56px)] py-10 flex flex-col items-center justify-center">
       <div

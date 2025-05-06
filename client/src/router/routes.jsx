@@ -11,6 +11,7 @@ import Settings from "../pages/settings";
 import Quizzes from "../pages/quizzes";
 import Leaderboards from "../pages/leaderboards";
 import Contact from "../pages/contact";
+import PlayerTrivia from "../pages/quizzes/player-trivia";
 
 function AppRouter() {
   const publicRoutes = [
@@ -22,6 +23,7 @@ function AppRouter() {
 
   const protectedRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
+    { path: "dashboard/quizzes/player-trivia", element: <PlayerTrivia /> },
     { path: "/settings", element: <Settings /> },
     { path: "/quizzes", element: <Quizzes /> },
     { path: "/leaderboards", element: <Leaderboards /> },

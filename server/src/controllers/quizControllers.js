@@ -16,7 +16,7 @@ async function getQuiz(req, res, next) {
 
     // fetch questions with options
     const qRes = await pool.query(
-      `SELECT q.question_id, q.question_text, json_agg(json_build_object('option_id', o.option_id, 'text', o.option_text)) AS options
+      `SELECT q.question_id, q.question_text, json_agg(json_build_object('option_id', o.option_id, 'text', o.option_text, 'is_correct', o.is_correct)) AS options
        FROM questions q
        JOIN options o ON o.question_id = q.question_id
        WHERE q.quiz_id = $1

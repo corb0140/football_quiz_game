@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const logger = require("../helpers/logger");
 
 // GET /quiz/:type
 async function getQuiz(req, res, next) {
@@ -24,7 +25,21 @@ async function getQuiz(req, res, next) {
       [quizId]
     );
 
-    res.json({ quizId, questions: qRes.rows });
+    // fetch attempts
+    const userId = req.user?.id; // optional chaining in case it's public
+
+    let attempts = 0;
+    if (userId) {
+      const userScore = await pool.query(
+        `SELECT attempts FROM user_scores WHERE quiz_id = $1 AND user_id = $2`,
+        [quizId, userId]
+      );
+      if (userScore.rows.length) {
+        attempts = userScore.rows[0].attempts;
+      }
+    }
+
+    res.json({ quizId, questions: qRes.rows, attempts });
   } catch (err) {
     next(err);
   }
@@ -36,8 +51,6 @@ async function submitQuiz(req, res, next) {
     const { quizId } = req.params;
     const { answers, username } = req.body;
     const userId = req.user.id;
-
-    console.log("Submitted answers:", answers);
 
     // calculate score
     let score = 0;
@@ -54,14 +67,25 @@ async function submitQuiz(req, res, next) {
       if (opt.rows[0].is_correct) score++;
     }
 
+    // fetch attempts
+    const userScore = await pool.query(
+      `SELECT attempts FROM user_scores WHERE quiz_id = $1 AND user_id = $2`,
+      [quizId, userId]
+    );
+    let attempts = 0;
+    if (userScore.rows.length) {
+      attempts = userScore.rows[0].attempts;
+    }
+    logger.info(attempts);
+
     // save score or update existing
     const result = await pool.query(
-      `INSERT INTO user_scores (quiz_id, user_id, username, score)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO user_scores (quiz_id, user_id, username, score, attempts)
+       VALUES ($1, $2, $3, $4, $5)
        ON CONFLICT (quiz_id, user_id)
-       DO UPDATE SET score = EXCLUDED.score, taken_at = NOW()
+       DO UPDATE SET score = EXCLUDED.score, attempts = EXCLUDED.attempts, taken_at = NOW()
        RETURNING user_score_id`,
-      [quizId, userId, username, score]
+      [quizId, userId, username, score, attempts + 1]
     );
 
     res.json({ userScoreId: result.rows[0].user_score_id, score });

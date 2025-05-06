@@ -14,16 +14,21 @@ function PlayerTrivia() {
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(5);
   const [showResult, setShowResult] = useState(false);
-  const [quizAttempts, setQuizAttempts] = useState(0);
+  const [quizAttempts, setQuizAttempts] = useState(null);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [userAnswers, setUserAnswers] = useState([]);
   const [feedbackMsg, setFeedbackMsg] = useState("");
 
   useEffect(() => {
-    axios.get("/quiz/player trivia").then((res) => {
-      setQuiz(res.data);
-    });
-  }, []);
+    axios
+      .get("/quiz/player trivia", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setQuiz(res.data);
+        setQuizAttempts(res.data.attempts);
+      });
+  }, [token]);
 
   useEffect(() => {
     if (showResult || !quiz || currentQuestionIdx >= quiz.questions.length)
@@ -96,8 +101,6 @@ function PlayerTrivia() {
         return;
       }
 
-      setQuizAttempts((prev) => prev + 1);
-
       const res = await axios.post(
         `/quiz/${quiz.quizId}/submit`,
         { answers, username: user.username },
@@ -122,8 +125,12 @@ function PlayerTrivia() {
 
       setFeedbackMsg(message);
       setScore(submittedScore);
-
       setShowResult(true);
+
+      const updatedQuiz = await axios.get("/quiz/player trivia", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setQuizAttempts(updatedQuiz.data.attempts);
     } catch (err) {
       console.error(err);
     }
@@ -175,32 +182,40 @@ function PlayerTrivia() {
   const question = quiz.questions[currentQuestionIdx];
 
   return (
-    <div className="flex flex-col items-center gap-5 p-5">
-      <h2 className="text-xl font-bold">Player Trivia</h2>
-      <p className="text-md text-dark-green">
-        Question {currentQuestionIdx + 1} of {quiz.questions.length}
-      </p>
-      <p className="text-lg">{question.question_text}</p>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 w-full">
-        {question.options.map((opt) => (
-          <button
-            key={opt.option_id}
-            className={`text-dark-green text-lg font-bold w-full p-4 lg:p-6 border rounded ${
-              selectedOptionId === opt.option_id
-                ? isAnswerCorrect
-                  ? "bg-green-300 border-green-600"
-                  : "bg-red-300 border-red-600"
-                : "bg-white"
-            }`}
-            onClick={() => handleAnswer(opt.option_id)}
-            disabled={selectedOptionId !== null}
-          >
-            {opt.text}
-          </button>
-        ))}
-      </div>
-      <p className="text-lg">Time Remaining: {timer}s</p>
-    </div>
+    <>
+      {quizAttempts < 2 ? (
+        <div className="flex flex-col items-center gap-5 p-5">
+          <h2 className="text-xl font-bold">Player Trivia</h2>
+          <p className="text-md text-dark-green">
+            Question {currentQuestionIdx + 1} of {quiz.questions.length}
+          </p>
+          <p className="text-lg">{question.question_text}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 w-full">
+            {question.options.map((opt) => (
+              <button
+                key={opt.option_id}
+                className={`text-dark-green text-lg font-bold w-full p-4 lg:p-6 border rounded ${
+                  selectedOptionId === opt.option_id
+                    ? isAnswerCorrect
+                      ? "bg-green-300 border-green-600"
+                      : "bg-red-300 border-red-600"
+                    : "bg-white"
+                }`}
+                onClick={() => handleAnswer(opt.option_id)}
+                disabled={selectedOptionId !== null}
+              >
+                {opt.text}
+              </button>
+            ))}
+          </div>
+          <p className="text-lg">Time Remaining: {timer}s</p>
+        </div>
+      ) : (
+        <p className="text-md text-red-600 relative top-20 text-center">
+          You've reached the maximum number of attempts.
+        </p>
+      )}
+    </>
   );
 }
 

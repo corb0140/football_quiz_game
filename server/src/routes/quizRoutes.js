@@ -8,7 +8,7 @@ const {
 } = require("../controllers/quizControllers");
 const authenticateUser = require("../middleware/auth");
 
-quizRouter.get("/:type", getQuiz);
+quizRouter.get("/:type", authenticateUser, getQuiz);
 
 quizRouter.post("/:quizId/submit", authenticateUser, submitQuiz);
 

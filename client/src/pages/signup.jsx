@@ -66,7 +66,7 @@ function Signup() {
         ></div>
 
         {/* RIGHT */}
-        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white lg:border not-lg:shadow-lg not-lg:rounded lg:rounded-tr lg:rounded-br">
+        <div className="flex flex-col h-full lg:w-1/2 p-10 gap-8 bg-white not-lg:shadow-lg not-lg:rounded lg:rounded-tr lg:rounded-br">
           {/* TITLE & LOGO */}
           <div className="flex items-center justify-start gap-5">
             <img src={logo} alt="Logo" className="h-8 w-8 mt-3" />

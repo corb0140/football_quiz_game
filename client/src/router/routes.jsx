@@ -11,12 +11,6 @@ import Settings from "../pages/settings";
 import Quizzes from "../pages/quizzes";
 import Leaderboards from "../pages/leaderboards";
 import Contact from "../pages/contact";
-import PlayerTrivia from "../pages/quizzes/player-trivia";
-import WorldCupTrivia from "../pages/quizzes/world-cup-trivia";
-import LeagueTrivia from "../pages/quizzes/league-trivia";
-import ChampionsLeagueTrivia from "../pages/quizzes/champions-league-trivia";
-import ManagerTrivia from "../pages/quizzes/manager-trivia";
-import ClubTrivia from "../pages/quizzes/club-trivia";
 
 function AppRouter() {
   const publicRoutes = [
@@ -28,18 +22,6 @@ function AppRouter() {
 
   const protectedRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
-    { path: "/dashboard/quizzes/player-trivia", element: <PlayerTrivia /> },
-    {
-      path: "/dashboard/quizzes/world-cup-trivia",
-      element: <WorldCupTrivia />,
-    },
-    { path: "/dashboard/quizzes/league-trivia", element: <LeagueTrivia /> },
-    {
-      path: "/dashboard/quizzes/champions-league-trivia",
-      element: <ChampionsLeagueTrivia />,
-    },
-    { path: "/dashboard/quizzes/manager-trivia", element: <ManagerTrivia /> },
-    { path: "/dashboard/quizzes/club-trivia", element: <ClubTrivia /> },
     { path: "/settings", element: <Settings /> },
     { path: "/quizzes", element: <Quizzes /> },
     { path: "/leaderboards", element: <Leaderboards /> },

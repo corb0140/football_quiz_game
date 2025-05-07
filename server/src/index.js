@@ -8,6 +8,7 @@ const logger = require("./helpers/logger");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const quizRoutes = require("./routes/quizRoutes");
+const leaderboardRoutes = require("./routes/leaderboardRoutes");
 
 // CONFIGURATION
 dotenv.config();
@@ -25,6 +26,7 @@ app.use(
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/quiz", quizRoutes);
+app.use("/leaderboard", leaderboardRoutes);
 
 //SERVER
 const PORT = process.env.PORT || 5000;

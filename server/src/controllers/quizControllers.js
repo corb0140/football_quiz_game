@@ -94,40 +94,4 @@ async function submitQuiz(req, res, next) {
   }
 }
 
-// GET /quiz/leaderboard/:type
-async function getLeaderboard(req, res, next) {
-  try {
-    const { type } = req.params;
-    const lb = await pool.query(
-      `SELECT us.username, MAX(us.score) AS best_score
-       FROM user_scores us
-       JOIN quizzes q ON us.quiz_id = q.quiz_id
-       WHERE q.type = $1
-       GROUP BY us.username
-       ORDER BY best_score DESC
-       LIMIT 10`,
-      [type]
-    );
-    res.json(lb.rows);
-  } catch (err) {
-    next(err);
-  }
-}
-
-// GET /quiz/leaderboard/overall
-async function getOverallLeaderboard(req, res, next) {
-  try {
-    const lb = await pool.query(
-      `SELECT username, AVG(score)::NUMERIC(10,2) AS avg_score
-       FROM user_scores
-       GROUP BY username
-       ORDER BY avg_score DESC
-       LIMIT 25`
-    );
-    res.json(lb.rows);
-  } catch (err) {
-    next(err);
-  }
-}
-
-module.exports = { getQuiz, submitQuiz, getLeaderboard, getOverallLeaderboard };
+module.exports = { getQuiz, submitQuiz };

@@ -4,9 +4,33 @@ import Card from "../components/Card";
 import { Link } from "react-router-dom";
 import { dashboardQuizCategories } from "../data/quiz-categories.js";
 import { Award, Medal } from "lucide-react";
+import axios from "@/api/axios";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
   const { user, isLoading, error } = UserData();
+  const [type, setType] = useState("overall");
+  const [data, setData] = useState([]);
+  const [isOverall, setIsOverall] = useState(false);
+
+  const userRank = data.findIndex((entry) => entry.username === user?.username);
+  const userData = data[userRank] || {};
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const url = type
+          ? `/leaderboard/${decodeURIComponent(type)}`
+          : "/leaderboard/overall";
+        const response = await axios.get(url);
+        setData(response.data);
+        setIsOverall(type === "overall");
+      } catch (error) {
+        console.error("Error fetching leaderboard data:", error);
+      }
+    };
+    fetchLeaderboard();
+  }, [type]);
 
   if (isLoading || error) {
     return <Loader isLoading={isLoading} error={error} />;
@@ -88,35 +112,45 @@ function Dashboard() {
 
           <select
             className="border border-white py-2 px-3 rounded-md"
-            defaultValue="overall"
+            value={type}
+            onChange={(e) => {
+              setType(e.target.value);
+            }}
           >
             <option value="overall">Overall Leaderboard</option>
-            <option value="player">Player Leaderboard</option>
-            <option value="player">League Leaderboard</option>
-            <option value="player">WC Leaderboard</option>
-            <option value="player">UCL Leaderboard</option>
+            <option value="player trivia">Player Leaderboard</option>
+            <option value="league trivia">League Leaderboard</option>
+            <option value="WC trivia">WC Leaderboard</option>
+            <option value="UCL trivia">UCL Leaderboard</option>
           </select>
         </div>
 
         {/* MY POSITION */}
-        <div className="flex items-center justify-between bg-light-green py-4 px-4 rounded-md">
-          <div className="flex items-center gap-4">
-            <div className="h-10 w-10 bg-dark-green rounded-md"></div>
+        {userData ? (
+          <div className="flex items-center justify-between bg-light-green py-4 px-4 rounded-md">
+            <div className="flex items-center gap-4">
+              <div className="h-10 w-10 bg-dark-green rounded-md"></div>
 
-            <div>
-              <p className="text-sm font-semibold">name</p>
-              <p className="text-sm font-semibold">score</p>
+              <div>
+                <p className="text-sm font-semibold">{userData.username}</p>
+                <p className="text-sm font-semibold">
+                  {isOverall ? `${userData.avg_score}%` : userData.best_score}
+                </p>
+              </div>
             </div>
-          </div>
 
-          <p className="text-sm font-semibold self-start">
-            1<sup>st</sup>
-          </p>
-        </div>
+            <p className="text-sm font-semibold self-start">
+              {userRank + 1}
+              <sup>{getOrdinalSuffix(userRank + 1)}</sup>
+            </p>
+          </div>
+        ) : (
+          <p className="text-sm text-white">You are not ranked yet</p>
+        )}
 
         {/* LEADERBOARD */}
         <div className="overflow-auto flex flex-col gap-2">
-          {[...Array(100)].map((_, index) => {
+          {data.map((entry, index) => {
             const position = index + 1;
             const ordinalSuffix = getOrdinalSuffix(position);
 
@@ -129,8 +163,10 @@ function Dashboard() {
                   <div className="h-10 w-10 rounded-md bg-light-green"></div>
 
                   <div>
-                    <p className="text-sm font-semibold">name</p>
-                    <p className="text-sm font-semibold">score</p>
+                    <p className="text-sm font-semibold">{entry.username}</p>
+                    <p className="text-sm font-semibold">
+                      {isOverall ? `${entry.avg_score}%` : entry.best_score}
+                    </p>
                   </div>
                 </div>
 
